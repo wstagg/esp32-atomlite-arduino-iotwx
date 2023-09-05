@@ -330,22 +330,22 @@ IoTwx::IoTwx(const char* dev_id, const char* ssid,
 void IoTwx::publishMQTTMeasurement(const char* topic, const char* sensor, float m, long offset) {
   char data[127] = {0};
   time_t t;
-  struct tm timeinfo;  
-  
+  struct tm timeinfo;
+
   while(!getLocalTime(&timeinfo)){
     Serial.println("[warn]:  Failed to obtain time");
-  } 
-  
+  }
+
   time(&t);
-  
+
   Serial.print("[info]: publishing = ");
 
   sprintf(data,
     "device: %s\nsensor: %s\nm: %f\nt: %lu\n",
-     device_id, sensor, m, t); 
+     device_id, sensor, m, t);
 
   Serial.println(data);
-  
+
   mqttClient.publish(topic, data);
   delay(750);
 }
